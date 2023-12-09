@@ -11,29 +11,30 @@
 # **************************************************************************** #
 
 #-------------------------------------------#
-#	TARGET									#
+#	TARGET				    #
 #-------------------------------------------#
 NAME := push_swap
 
 #-------------------------------------------#
-#	INGREDIENTS								#
+#	INGREDIENTS			    #
 #-------------------------------------------#
 LIBS		:=	ft
+LIBS_FOLDER	:=	lib/libft
 LIBS_TARGET	:=	libft/libft.a
 
 INCS		:=	include	\
-				libft/include
+			libft/include
 
 SRC_DIR		:=	src
 SRCS 		:=	src/push_swap.c \
-				src/named_operations.c \
-				src/named_operations2.c \
-				src/named_operations3.c \
-				src/parsing_utils.c \
-				src/stack_operations.c \
-				src/list_utils.c \
-				src/list_utils2.c \
-				src/sorting_utils.c
+			src/named_operations.c \
+			src/named_operations2.c \
+			src/named_operations3.c \
+			src/parsing_utils.c \
+			src/stack_operations.c \
+			src/list_utils.c \
+			src/list_utils2.c \
+			src/sorting_utils.c
 
 BUILD_DIR 	:=	.build
 OBJS		:=	$(SRCS:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
@@ -46,23 +47,23 @@ LDFLAGS		:=	$(addprefix -L, $(dir $(LIBS_TARGET)))
 LDLIBS		:=	$(addprefix -l, $(LIBS))
 
 #-------------------------------------------#
-#	UTILS									#
+#	UTILS				    #
 #-------------------------------------------#
 RM 			:=	rm -f
 MAKEFLAGS += --no-print-directory
 DIR_DUP		=	mkdir -p $(@D)
 
 #-------------------------------------------#
-#	RECIPES									#
+#	RECIPES				    #
 #-------------------------------------------#
-all: $(NAME)
+all: libft $(NAME)
 
 $(NAME): $(OBJS) $(LIBS_TARGET)
 	$(CC) $(LDFLAGS) $(OBJS) $(LDLIBS) -o $@
 	$(info Created $@)
 
-$(LIBS_TARGET):
-	$(MAKE) -C $(@D)
+libft:
+	$(MAKE) -C $(LIBS_FOLDER)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	$(DIR_DUP)
@@ -84,8 +85,8 @@ re:
 	$(MAKE) all
 
 #-------------------------------------------#
-#	SPECIAL RULES							#
+#	SPECIAL RULES			    #
 #-------------------------------------------#
 
-.PHONY: all re clean fclean
+.PHONY: all re clean fclean libft
 .SILENT:
